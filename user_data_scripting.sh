@@ -6,7 +6,7 @@ sed -i 's/#Port 443/Port 443/g' /etc/ssh/sshd_config
 service sshd restart
 
 sudo apt-get install awscli
-sudo yum install python37
+sudo yum install python3
 sudo yum install -y jq
 
 INSTANCE_ID=`wget -qO- http://instance-data/latest/meta-data/instance-id`
