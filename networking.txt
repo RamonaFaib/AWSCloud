@@ -1,0 +1,42 @@
+#1 iptables -I INPUT -p tcp -s 0/0 -d 192.168.42.11 --dport 25 -j ACCEPT 
+#2 iptables -I OUTBOUND -p tcp -s 192.168.42.11 -d 192.168.42.251 --dport 53 -j ACCEPT
+#2 iptables -I OUTBOUND -p udp -s 192.168.42.11 -d 192.168.42.251 --dport 53 -j ACCEPT
+#3 iptables -A INPUT -p tcp -d 192.168.42.11 --dport 143 -j DROP
+#3 iptables -A OUTBOUND -p tcp -s 192.168.42.11 --dport 143 -j DROP
+#4 iptables -I INPUT -p tcp -s 192.168.42.150-192.168.42.199 -d 192.168.42.11 --dport 993 -j ACCEPT
+#4 iptables -I INPUT -p tcp -s 192.168.42.250 -d 192.168.42.11 --dport 993 -j ACCEPT
+#5 iptables -I INPUT -p tcp -s 192.168.42.200-192.168.42.220 -d 192.168.42.11 --dport 465 -j ACCEPT
+#5 iptables -A INPUT -p tcp -d 192.168.42.11 --dport 465 -j DROP
+#6 iptables -I INPUT -p tcp -s 192.168.42.150-192.168.42.199 -d 192.168.42.11 --dport 587 -j ACCEPT
+#6 iptables -I INPUT -p tcp -s 192.168.42.200-192.168.42.220 -d 192.168.42.11 --dport 587 -j ACCEPT
+#6 iptables -A INPUT -p tcp -d 192.168.42.11 --dport 587 -j DROP
+#7 iptables -I INPUT -p tcp -s 192.168.42.250 -d 192.168.42.11 --dport 445 -j ACCEPT
+#8 iptables -A INPUT -p tcp -s 192.168.42.200-192.168.42.220 -d 192.168.42.11 --dport 22 -j ACCEPT
+#3 iptables -I INPUT -p tcp -d 192.168.42.11 --dport 443 -j ACCEPT
+#9 iptables -A INPUT -j DROP
+
+
+iptables -I INPUT -p tcp -s 0/0 -d 172.31.37.59 --dport 25 -j ACCEPT
+iptables -I INPUT -p tcp -m iprange --src-range 172.31.37.150-172.31.37.199 -d 172.31.37.59 --dport 993 -j ACCEPT
+iptables -I INPUT -p tcp -s 172.31.37.250 -d 192.168.42.11 --dport 993 -j ACCEPT
+iptables -I INPUT -p tcp -m iprange --src-range 172.31.37.200-172.31.37.220 -d 172.31.37.59 --dport 465 -j ACCEPT
+iptables -I INPUT -p tcp -m iprange --src-range 172.31.37.150-172.31.37.199 -d 172.31.37.59 --dport 587 -j ACCEPT
+iptables -I INPUT -p tcp -m iprange --src-range 172.31.37.200-172.31.37.220 -d 172.31.37.59 --dport 587 -j ACCEPT
+iptables -I INPUT -p tcp -s 172.31.37.250 -d 192.168.42.11 --dport 445 -j ACCEPT
+iptables -I INPUT -p tcp -m iprange --src-range 172.31.37.200-172.31.37.220 -d 172.31.37.59 --dport 22 -j ACCEPT
+iptables -I INPUT -p tcp -d 172.31.37.59 --dport 443 -j ACCEPT
+iptables -A INPUT -p tcp -d 172.31.37.59 --dport 587 -j DROP
+iptables -A INPUT -p tcp -d 172.31.37.59 --dport 465 -j DROP
+iptables -A INPUT -p tcp -d 172.31.37.59 --dport 143 -j DROP
+iptables -A INPUT -j DROP
+
+iptables -I OUTPUT -p tcp -s 172.31.37.59 -d 172.31.37.251 --dport 53 -j ACCEPT
+iptables -I OUTPUT -p udp -s 172.31.37.59 -d 172.31.37.251 --dport 53 -j ACCEPT
+iptables -A OUTPUT -p tcp -s 172.31.37.59 --dport 143 -j DROP
+
+Local subnet is 172.31.32.0/20
+Mail server ip: 172.31.37.59
+IT department IP range 172.31.37.200-220
+HR department IP range 172.31.37.150-199
+Backup server IP: 172.31.37.250
+Local DNS server IP: 172.31.37.251

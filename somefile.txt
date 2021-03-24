@@ -1,0 +1,7 @@
+region=HelloWorld
+az_code=Bubikakitis
+public_ip=smt1
+private_ip=smt1
+instance_name=smt1
+instance_id=smt1
+account_id=smt1

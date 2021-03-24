@@ -1,0 +1,91 @@
+1/10 Create a directorty in /opt called archive
+Commands to use:
+sudo mkdir archive
+
+total 8
+drwxr-xr-x  5 root root   59 Feb  3 08:09 .
+dr-xr-xr-x 18 root root  257 Feb  3 08:03 ..
+drwxr-xr-x  2 root root   24 Feb  3 08:09 archive
+drwxr-xr-x  4 root root   33 Jan 26 04:15 aws
+drwxr-xr-x  2 root root    6 Aug 16  2018 rh
+-rwxr-xr-x  1 root root 4693 Feb  3 08:06 script.sh
+
+2/10 Check if nginx is installed
+Commands to use:
+sudo yum search nginx
+
+Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
+============================== N/S matched: nginx ==============================
+pcp-pmda-nginx.x86_64 : Performance Co-Pilot (PCP) metrics for the Nginx
+                      : Webserver
+
+  Name and summary matches only, use "search all" for everything.
+
+3/10 Install nginx
+Commands to use:
+sudo amazon-linux-extras install -y nginx1
+
+4/10 Verify that nginx is installed and running
+Commands to use:
+ps -ef | grep nginx
+
+admin     3465  3349  0 08:09 pts/0    00:00:00 grep nginx
+
+5/10 Archive files in /etc/nginx
+Commands to use:
+cd /etc
+sudo tar -czvf nginxarchived.tar.gz /etc/nginx
+
+
+6/10 Move nginxarchived.tar.gz to /opt/archive
+Commands to use:
+sudo mv nginxarchived.tar.gz /opt/archive
+
+
+total 12
+drwxr-xr-x 2 root root   52 Feb  3 08:09 .
+drwxr-xr-x 5 root root   59 Feb  3 08:09 ..
+-rw-r--r-- 1 root root 6069 Feb  3 08:09 nginxarchived.tar.gz
+-rwxrwxrwx 1 root root 1239 Feb  3 08:09 output.txt
+
+7/10 Create a user called director
+Commands to use:
+sudo useradd director
+
+director:x:1002:1002::/home/director:/bin/bash
+
+8/10 Create a group called maintainers
+Commands to use:
+sudo groupadd maintainers
+
+maintainers:x:1003:
+
+9/10 Change ownership of dir archive and all files inside to user
+Commands to use:
+sudo chown -R director:maintainers /opt/archive
+
+total 8
+drwxr-xr-x  5 root     root          59 Feb  3 08:09 .
+dr-xr-xr-x 18 root     root         257 Feb  3 08:03 ..
+drwxr-xr-x  2 director maintainers   52 Feb  3 08:09 archive
+drwxr-xr-x  4 root     root          33 Jan 26 04:15 aws
+drwxr-xr-x  2 root     root           6 Aug 16  2018 rh
+-rwxr-xr-x  1 root     root        4693 Feb  3 08:06 script.sh
+
+total 12
+drwxr-xr-x 2 director maintainers   52 Feb  3 08:09 .
+drwxr-xr-x 5 root     root          59 Feb  3 08:09 ..
+-rw-r--r-- 1 director maintainers 6069 Feb  3 08:09 nginxarchived.tar.gz
+-rwxrwxrwx 1 director maintainers 2176 Feb  3 08:09 output.txt
+
+10/10 Change rights for maintainers for dir archive and all files inside to rwx
+Commands to use:
+sudo chmod -R 775 /opt/archive
+
+total 8
+drwxr-xr-x  5 root     root          59 Feb  3 08:09 .
+dr-xr-xr-x 18 root     root         257 Feb  3 08:03 ..
+drwxrwxr-x  2 director maintainers   52 Feb  3 08:09 archive
+drwxr-xr-x  4 root     root          33 Jan 26 04:15 aws
+drwxr-xr-x  2 root     root           6 Aug 16  2018 rh
+-rwxr-xr-x  1 root     root        4693 Feb  3 08:06 script.sh
